@@ -1,15 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import dva from 'dva';
 import reportWebVitals from './reportWebVitals';
+import {CountState} from "./models/count/types";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+export interface StateHome {
+    count: CountState
+}
+
+const app = dva();
+
+// app.use({});
+
+app.model(require('./models/count').default)
+
+app.router(require('./router').default);
+
+app.start('#root');
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
